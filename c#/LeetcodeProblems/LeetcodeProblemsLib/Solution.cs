@@ -5,6 +5,54 @@ namespace LeetcodeProblemsLib
     public class Solution
     {
         /// <summary>
+        /// 36. Valid Sudoku
+        /// https://leetcode.com/problems/valid-sudoku/
+        /// </summary>
+        public bool IsValidSudoku(char[][] board)
+        {
+            foreach (var line in board)
+            {
+                if(!IsArrayValid(line)) return false;
+            }
+
+            for (var i = 0; i < 9; i++)
+            {
+                if (!IsArrayValid(new List<char> {board[0][i],board[1][i],board[2][i],board[3][i],board[4][i],board[5][i],board[6][i],board[7][i],board[8][i]}))
+                    return false;
+            }
+
+            for (var i = 0; i < 9; i+= 3)
+            {
+                for (var j = 0; j < 9; j += 3)
+                {
+                    if (!IsArrayValid(new List<char>
+                        {
+                            board[i][j], board[i][j+1], board[i][j+2],
+                            board[i+1][j], board[i+1][j+1], board[i+1][j+2],
+                            board[i+2][j], board[i+2][j+1], board[i+2][j+2]
+                        }))
+                        return false;
+                }
+            }
+
+            bool IsArrayValid(IEnumerable<char> arr)
+            {
+                var hs = new HashSet<char>();
+
+                foreach (var item in arr)
+                {
+                    if (item == '.') continue;
+                    if (hs.Contains(item)) return false;
+                    hs.Add(item);
+                }
+
+                return true;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// N 1122
         /// https://leetcode.com/problems/relative-sort-array/
         /// </summary>
