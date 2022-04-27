@@ -5,6 +5,66 @@ namespace LeetcodeProblemsLib
     public class Solution
     {
         /// <summary>
+        /// 1572. Matrix Diagonal Sum
+        /// https://leetcode.com/problems/matrix-diagonal-sum/
+        /// </summary>
+        public int DiagonalSum(int[][] mat)
+        {
+            int sum = 0;
+            int i   = 0;
+            foreach (var m in mat)
+            {
+                sum += m[i];
+                sum += m[m.Length - i - 1];
+                i++;
+            }
+
+            if (mat[0].Length % 2 != 0)
+            {
+                var mid = mat[0].Length / 2;
+                sum -= mat[mid][mid];
+            }
+
+            return sum;
+        }
+
+        /// <summary>
+        /// 2133. Check if Every Row and Column Contains All Numbers
+        /// https://leetcode.com/problems/check-if-every-row-and-column-contains-all-numbers/
+        /// </summary>
+        public bool CheckValid(int[][] matrix)
+        {
+            foreach (var line in matrix)
+            {
+                if (!CheckLine(line)) return false;
+            }
+
+            for (var i = 0; i < matrix[0].Length; i++)
+            {
+                var list = new List<int>();
+                foreach (var t in matrix)
+                {
+                    list.Add(t[i]);
+                }
+                if(!CheckLine(list)) return false;
+            }
+
+            return true;
+
+            bool CheckLine(IEnumerable<int> line)
+            {
+                var hs = new HashSet<int>();
+                foreach (var item in line)
+                {
+                    if(hs.Contains(item)) return false;
+                    hs.Add(item);
+                }
+
+                return true;
+            }
+        }
+
+        /// <summary>
         /// 36. Valid Sudoku
         /// https://leetcode.com/problems/valid-sudoku/
         /// </summary>
